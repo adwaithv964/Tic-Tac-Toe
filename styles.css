@@ -45,6 +45,7 @@ h1 {
 .difficulty select {
   padding: 5px;
   font-size: 1em;
+  background-color: white;
 }
 
 .game-board {
