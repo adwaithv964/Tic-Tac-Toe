@@ -22,6 +22,7 @@ const winningConditions = [
   [2, 4, 6],
 ];
 
+// Initialize the game board
 function initializeGame() {
   gameBoard.innerHTML = "";
   board.forEach((_, index) => {
@@ -33,6 +34,7 @@ function initializeGame() {
   });
 }
 
+// Handle cell click
 function handleCellClick(event) {
   const cell = event.target;
   const index = cell.getAttribute("data-index");
@@ -47,38 +49,48 @@ function handleCellClick(event) {
   if (gameActive) switchPlayer();
 }
 
+// Switch between player X and AI O
 function switchPlayer() {
   currentPlayer = currentPlayer === "X" ? "O" : "X";
   if (currentPlayer === "O") aiMove();
 }
 
+// AI makes a move (smarter but simple)
 function aiMove() {
-  const bestMove = findBestMove(board);
-  board[bestMove] = "O";
+  // Try to take the center if it's available
+  if (board[4] === "") {
+    board[4] = "O";
+    const centerCell = document.querySelector(`.cell[data-index="4"]`);
+    centerCell.textContent = "O";
+    centerCell.classList.add("o", "taken");
+  } else {
+    // Check for available cells and make a random move
+    const emptyCells = board.map((val, idx) => val === "" ? idx : null).filter(v => v !== null);
+    const randomIndex = emptyCells[Math.floor(Math.random() * emptyCells.length)];
+    board[randomIndex] = "O";
 
-  const cell = document.querySelector(`.cell[data-index="${bestMove}"]`);
-  cell.textContent = "O";
-  cell.classList.add("o", "taken");
+    const cell = document.querySelector(`.cell[data-index="${randomIndex}"]`);
+    cell.textContent = "O";
+    cell.classList.add("o", "taken");
+  }
 
   checkResult();
   if (gameActive) currentPlayer = "X";
 }
 
+// Check for win or draw
 function checkResult() {
-  let roundWon = false;
-
-  for (let condition of winningConditions) {
-    const [a, b, c] = condition;
-    if (board[a] && board[a] === board[b] && board[a] === board[c]) {
-      roundWon = true;
-      break;
-    }
+  if (checkWinner("X")) {
+    gameActive = false;
+    message.textContent = "You Win!";
+    updateScore("X");
+    return;
   }
 
-  if (roundWon) {
+  if (checkWinner("O")) {
     gameActive = false;
-    message.textContent = currentPlayer === "X" ? "You Win!" : "AI Wins!";
-    updateScore(currentPlayer);
+    message.textContent = "AI Wins!";
+    updateScore("O");
     return;
   }
 
@@ -89,6 +101,14 @@ function checkResult() {
   }
 }
 
+// Check if the given player has won
+function checkWinner(player) {
+  return winningConditions.some(([a, b, c]) => {
+    return board[a] === player && board[b] === player && board[c] === player;
+  });
+}
+
+// Update the score
 function updateScore(winner) {
   if (winner === "X") playerScore++;
   else aiScore++;
@@ -97,62 +117,7 @@ function updateScore(winner) {
   aiScoreElem.textContent = aiScore;
 }
 
-function findBestMove(board) {
-  let bestScore = -Infinity;
-  let move;
-
-  for (let i = 0; i < board.length; i++) {
-    if (board[i] === "") {
-      board[i] = "O";
-      const score = minimax(board, 0, false);
-      board[i] = "";
-      if (score > bestScore) {
-        bestScore = score;
-        move = i;
-      }
-    }
-  }
-  return move;
-}
-
-function minimax(board, depth, isMaximizing) {
-  const scores = { X: -10, O: 10, draw: 0 };
-  const result = checkWinner();
-
-  if (result !== null) return scores[result];
-
-  if (isMaximizing) {
-    let bestScore = -Infinity;
-    for (let i = 0; i < board.length; i++) {
-      if (board[i] === "") {
-        board[i] = "O";
-        bestScore = Math.max(bestScore, minimax(board, depth + 1, false));
-        board[i] = "";
-      }
-    }
-    return bestScore;
-  } else {
-    let bestScore = Infinity;
-    for (let i = 0; i < board.length; i++) {
-      if (board[i] === "") {
-        board[i] = "X";
-        bestScore = Math.min(bestScore, minimax(board, depth + 1, true));
-        board[i] = "";
-      }
-    }
-    return bestScore;
-  }
-}
-
-function checkWinner() {
-  for (let condition of winningConditions) {
-    const [a, b, c] = condition;
-    if (board[a] && board[a] === board[b] && board[a] === board[c]) return board[a];
-  }
-  if (!board.includes("")) return "draw";
-  return null;
-}
-
+// Restart the game
 restartBtn.addEventListener("click", () => {
   board = ["", "", "", "", "", "", "", "", ""];
   currentPlayer = "X";
