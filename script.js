@@ -6,7 +6,7 @@ let ai = 'O';
 let gameOver = false;
 let playerScore = 0;
 let aiScore = 0;
-let difficulty = 'hard'; // Default difficulty mode
+let difficulty = 'easy'; // Default difficulty mode set to easy
 
 const gameBoard = document.getElementById('game-board');
 const message = document.getElementById('message');
@@ -15,13 +15,14 @@ const playerScoreElem = document.getElementById('player-score');
 const aiScoreElem = document.getElementById('ai-score');
 const difficultySelect = document.getElementById('difficulty');
 
-// Change difficulty mode
+// Change difficulty mode when selected from the dropdown
 difficultySelect.addEventListener('change', (e) => {
   difficulty = e.target.value;
   resetGame();
   renderBoard();  // Ensure the board is rendered after difficulty change
 });
 
+// Render the game board based on current state
 function renderBoard() {
   gameBoard.innerHTML = '';
   for (let i = 0; i < 9; i++) {
@@ -182,4 +183,8 @@ function resetGame() {
 
 restartBtn.addEventListener('click', resetGame);
 
-renderBoard();
+// Ensure the game renders correctly on first load with default easy mode
+window.addEventListener('load', () => {
+  difficultySelect.value = 'easy';  // Set default mode to 'easy'
+  renderBoard();  // Render the board as soon as the page loads
+});
