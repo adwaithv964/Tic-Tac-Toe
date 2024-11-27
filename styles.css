@@ -24,6 +24,29 @@ h1 {
   color: #fddb3a;
 }
 
+.controls {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 20px;
+  gap: 10px;
+}
+
+.controls label {
+  font-size: 1em;
+  color: #fddb3a;
+}
+
+.controls select {
+  padding: 5px 10px;
+  font-size: 1em;
+  border: none;
+  border-radius: 5px;
+  background: #444;
+  color: #fff;
+  cursor: pointer;
+  outline: none;
+}
+
 .scoreboard {
   display: flex;
   justify-content: space-around;
@@ -36,16 +59,6 @@ h1 {
   padding: 10px 20px;
   border-radius: 8px;
   box-shadow: 0 4px 10px rgba(0, 0, 0, 0.5);
-}
-
-.difficulty {
-  margin-bottom: 20px;
-}
-
-.difficulty select {
-  padding: 5px;
-  font-size: 1em;
-  background-color: white;
 }
 
 .game-board {

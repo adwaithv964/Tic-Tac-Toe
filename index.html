@@ -9,17 +9,26 @@
 <body>
   <div class="game-container">
     <h1>Tic-Tac-Toe</h1>
+    <div class="controls">
+      <div>
+        <label for="difficulty">Difficulty:</label>
+        <select id="difficulty">
+          <option value="easy">Easy</option>
+          <option value="medium">Medium</option>
+          <option value="hard">Hard</option>
+        </select>
+      </div>
+      <div>
+        <label for="first-player-select">First Player:</label>
+        <select id="first-player-select">
+          <option value="player">Player</option>
+          <option value="ai">AI</option>
+        </select>
+      </div>
+    </div>
     <div class="scoreboard">
       <div>Player: <span id="player-score">0</span></div>
       <div>AI: <span id="ai-score">0</span></div>
-    </div>
-    <div class="difficulty">
-      <label for="difficulty">Select Difficulty:</label>
-      <select id="difficulty">
-        <option value="easy">Easy</option>
-        <option value="medium">Medium</option>
-        <option value="hard">Hard</option>
-      </select>
     </div>
     <div class="game-board" id="game-board"></div>
     <div class="message" id="message"></div>
