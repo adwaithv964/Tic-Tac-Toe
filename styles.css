@@ -1,189 +1,75 @@
-/* styles.css */
-body {
-  font-family: "Roboto", sans-serif;
-  background: linear-gradient(135deg, #1a2a6c, #b21f1f, #fdbb2d);
-  color: #ffffff;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  height: 100vh;
-  margin: 0;
-}
-
-.game-container {
-  text-align: center;
-  background: rgba(0, 0, 0, 0.8);
-  padding: 20px;
-  border-radius: 15px;
-  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.5);
-}
-
-h1 {
-  font-size: 2.5em;
-  margin-bottom: 20px;
-  color: #fddb3a;
-}
-
-.controls {
-  display: flex;
-  justify-content: space-between;
-  margin-bottom: 20px;
-  gap: 10px;
-}
-
-.controls label {
-  font-size: 1em;
-  color: #fddb3a;
-}
-
-.controls select {
-  padding: 5px 10px;
-  font-size: 1em;
-  border: none;
-  border-radius: 5px;
-  background: #444;
-  color: #fff;
-  cursor: pointer;
-  outline: none;
-}
-
-.scoreboard {
-  display: flex;
-  justify-content: space-around;
-  margin-bottom: 20px;
-  font-size: 1.3em;
-}
-
-.scoreboard div {
-  background: #333;
-  padding: 10px 20px;
-  border-radius: 8px;
-  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.5);
-}
-
-.game-board {
-  display: grid;
-  grid-template-columns: repeat(3, 100px);
-  grid-gap: 10px;
-  margin: 20px auto;
-}
-
-.cell {
-  width: 100px;
-  height: 100px;
-  background: #444;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  font-size: 2.5em;
-  color: #ffffff;
-  border-radius: 10px;
-  transition: transform 0.2s, background-color 0.3s;
-  cursor: pointer;
-}
-
-.cell:hover {
-  transform: scale(1.1);
-  background: #6c63ff;
-}
-
-.cell.taken {
-  cursor: not-allowed;
-}
-
-.cell.x {
-  background: linear-gradient(45deg, #ff416c, #ff4b2b);
-  color: #fff;
-}
-
-.cell.o {
-  background: linear-gradient(45deg, #00c6ff, #0072ff);
-  color: #fff;
-}
-
-.message {
-  margin-bottom: 20px;
-  font-size: 1.2em;
-  color: #fddb3a;
-}
-
-button {
-  padding: 12px 30px;
-  background: #6c63ff;
-  border: none;
-  border-radius: 5px;
-  color: #ffffff;
-  cursor: pointer;
-  font-size: 1em;
-  transition: background 0.3s;
-}
-
-button:hover {
-  background: #5352ed;
-}
-#game-mode{
-  background-color: white;
-}
-
 /* General responsive design */
 @media screen and (max-width: 600px) {
   .game-container {
-    width: 90%;
+    width: 95%;
     padding: 15px;
   }
 
   h1 {
-    font-size: 2em;
+    font-size: 1.8em;
+    margin-bottom: 15px;
   }
 
   .scoreboard {
     flex-direction: column;
-    gap: 10px;
+    align-items: center;
     font-size: 1em;
+    gap: 10px;
   }
 
   .scoreboard div {
-    padding: 8px 15px;
-  }
-
-  .game-board {
-    grid-template-columns: repeat(3, 80px);
-    grid-gap: 8px;
-  }
-
-  .cell {
-    width: 80px;
-    height: 80px;
-    font-size: 2em;
+    padding: 8px 12px;
+    text-align: center;
+    width: 100%;
   }
 
   .options {
     display: flex;
     flex-direction: column;
     align-items: center;
-    gap: 10px;
-    margin: 10px 0;
+    gap: 8px;
+    margin: 15px 0;
   }
 
   .options label {
     font-size: 1em;
+    margin-bottom: 5px;
   }
 
   .options select {
     font-size: 1em;
-    padding: 8px;
+    padding: 10px;
     width: 100%;
-    max-width: 200px;
+    max-width: 220px;
+    border-radius: 5px;
+  }
+
+  .game-board {
+    grid-template-columns: repeat(3, 80px);
+    grid-gap: 8px;
+    justify-content: center;
+  }
+
+  .cell {
+    width: 80px;
+    height: 80px;
+    font-size: 2em;
+    border-radius: 8px;
   }
 
   button {
-    font-size: 0.9em;
+    font-size: 1em;
     padding: 10px 20px;
+    width: 100%;
+    max-width: 180px;
+    margin-top: 10px;
+    border-radius: 5px;
   }
 
   .message {
     font-size: 1em;
-    margin-bottom: 15px;
+    text-align: center;
+    margin-bottom: 10px;
   }
 }
 
@@ -202,12 +88,16 @@ button:hover {
 
   .options select {
     font-size: 0.9em;
-    padding: 6px;
-    max-width: 180px;
+    padding: 8px;
+    max-width: 200px;
   }
 
   button {
-    font-size: 0.8em;
+    font-size: 0.9em;
     padding: 8px 16px;
+  }
+
+  h1 {
+    font-size: 1.6em;
   }
 }
