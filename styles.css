@@ -1,103 +1,139 @@
-/* General responsive design */
-@media screen and (max-width: 600px) {
-  .game-container {
-    width: 95%;
-    padding: 15px;
-  }
-
-  h1 {
-    font-size: 1.8em;
-    margin-bottom: 15px;
-  }
-
-  .scoreboard {
-    flex-direction: column;
-    align-items: center;
-    font-size: 1em;
-    gap: 10px;
-  }
-
-  .scoreboard div {
-    padding: 8px 12px;
-    text-align: center;
-    width: 100%;
-  }
-
-  .options {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 8px;
-    margin: 15px 0;
-  }
-
-  .options label {
-    font-size: 1em;
-    margin-bottom: 5px;
-  }
-
-  .options select {
-    font-size: 1em;
-    padding: 10px;
-    width: 100%;
-    max-width: 220px;
-    border-radius: 5px;
-  }
-
-  .game-board {
-    grid-template-columns: repeat(3, 80px);
-    grid-gap: 8px;
-    justify-content: center;
-  }
-
-  .cell {
-    width: 80px;
-    height: 80px;
-    font-size: 2em;
-    border-radius: 8px;
-  }
-
-  button {
-    font-size: 1em;
-    padding: 10px 20px;
-    width: 100%;
-    max-width: 180px;
-    margin-top: 10px;
-    border-radius: 5px;
-  }
-
-  .message {
-    font-size: 1em;
-    text-align: center;
-    margin-bottom: 10px;
-  }
+/* General body styling */
+body {
+  font-family: "Roboto", sans-serif;
+  background: linear-gradient(135deg, #1a2a6c, #b21f1f, #fdbb2d);
+  color: #ffffff;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  margin: 0;
 }
 
-/* Even smaller screens (e.g., older phones) */
-@media screen and (max-width: 400px) {
-  .game-board {
-    grid-template-columns: repeat(3, 60px);
-    grid-gap: 6px;
-  }
+.game-container {
+  text-align: center;
+  background: rgba(0, 0, 0, 0.8);
+  padding: 25px;
+  border-radius: 15px;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.5);
+  width: 350px; /* Adjust width to fit new layout */
+}
 
-  .cell {
-    width: 60px;
-    height: 60px;
-    font-size: 1.5em;
-  }
+h1 {
+  font-size: 2.5em;
+  margin-bottom: 20px;
+  color: #fddb3a;
+}
 
-  .options select {
-    font-size: 0.9em;
-    padding: 8px;
-    max-width: 200px;
-  }
+/* Updated controls */
+.options {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 20px;
+}
 
-  button {
-    font-size: 0.9em;
-    padding: 8px 16px;
-  }
+.options label {
+  font-size: 0.9em;
+  color: #fddb3a;
+  margin-right: 5px;
+}
 
-  h1 {
-    font-size: 1.6em;
-  }
+.options select {
+  padding: 5px;
+  font-size: 0.85em;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  background: #ffffff;
+  color: #000000;
+  outline: none;
+  width: 110px; /* Compact width */
+  height: 35px; /* Adjusted height */
+  text-align: center;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2); /* Subtle shadow */
+}
+
+.options select:focus {
+  border-color: #fddb3a;
+  box-shadow: 0 0 5px rgba(253, 219, 58, 0.5); /* Focus effect */
+}
+
+/* Scoreboard */
+.scoreboard {
+  display: flex;
+  justify-content: space-around;
+  margin-bottom: 20px;
+  font-size: 1.3em;
+}
+
+.scoreboard div {
+  background: #333;
+  padding: 10px 20px;
+  border-radius: 8px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.5);
+}
+
+/* Game board styling */
+.game-board {
+  display: grid;
+  grid-template-columns: repeat(3, 100px);
+  grid-gap: 18px;
+  margin: 25px auto;
+}
+
+.cell {
+  width: 100px;
+  height: 100px;
+  background: #444;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 2.5em;
+  color: #ffffff;
+  border-radius: 10px;
+  transition: transform 0.2s, background-color 0.3s;
+  cursor: pointer;
+}
+
+.cell:hover {
+  transform: scale(1.1);
+  background: #6c63ff;
+}
+
+.cell.taken {
+  cursor: not-allowed;
+}
+
+.cell.x {
+  background: linear-gradient(45deg, #ff416c, #ff4b2b);
+  color: #fff;
+}
+
+.cell.o {
+  background: linear-gradient(45deg, #00c6ff, #0072ff);
+  color: #fff;
+}
+
+/* Message styling */
+.message {
+  margin-bottom: 20px;
+  font-size: 1.2em;
+  color: #fddb3a;
+}
+
+/* Button styling */
+button {
+  padding: 12px 30px;
+  background: #6c63ff;
+  border: none;
+  border-radius: 5px;
+  color: #ffffff;
+  cursor: pointer;
+  font-size: 1em;
+  transition: background 0.3s;
+}
+
+button:hover {
+  background: #5352ed;
 }
