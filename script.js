@@ -1,26 +1,27 @@
 const gameBoard = document.getElementById('game-board');
 const message = document.getElementById('message');
 const restartBtn = document.getElementById('restart-btn');
-const playerScoreElem = document.getElementById('player-score');
-const aiScoreElem = document.getElementById('ai-score');
+const player1ScoreElem = document.getElementById('player1-score');
+const player2ScoreElem = document.getElementById('player2-score');
+const gameModeSelect = document.getElementById('game-mode');
 const difficultySelect = document.getElementById('difficulty');
-const firstPlayerSelect = document.getElementById('first-player-select');
 
 let board = ['', '', '', '', '', '', '', '', ''];
-let player = 'X';
-let ai = 'O';
+let player1 = 'X';
+let player2 = 'O';
+let currentPlayer = player1;
 let isPlayerTurn = true;
 let gameOver = false;
-let playerScore = 0;
-let aiScore = 0;
+let player1Score = 0;
+let player2Score = 0;
 let difficulty = 'easy';
-let firstPlayer = 'player';
-let aiInProgress = false; // Prevents overlapping AI turns
+let gameMode = 'ai';
+let aiInProgress = false;
 
 // Initialize the game
 function initGame() {
   difficulty = difficultySelect.value;
-  firstPlayer = firstPlayerSelect.value;
+  gameMode = gameModeSelect.value;
   resetGame();
 }
 
@@ -30,30 +31,40 @@ function renderBoard() {
   board.forEach((cell, i) => {
     const div = document.createElement('div');
     div.classList.add('cell');
-    if (cell === player) div.classList.add('x');
-    if (cell === ai) div.classList.add('o');
+    if (cell === player1) div.classList.add('x');
+    if (cell === player2) div.classList.add('o');
     if (cell) div.classList.add('taken');
     div.textContent = cell;
-    div.addEventListener('click', () => handlePlayerMove(i));
+    div.addEventListener('click', () => handleMove(i));
     gameBoard.appendChild(div);
   });
 }
 
-// Handle player move
-function handlePlayerMove(i) {
-  if (!isPlayerTurn || gameOver || board[i] !== '') return;
-  board[i] = player;
-  isPlayerTurn = false;
+// Handle a move
+function handleMove(i) {
+  if (gameOver || board[i] !== '' || (gameMode === 'ai' && !isPlayerTurn)) return;
+
+  board[i] = currentPlayer;
   renderBoard();
-  checkGameState(player);
+  checkGameState(currentPlayer);
+
   if (!gameOver) {
-    setTimeout(aiMove, 500);
+    if (gameMode === 'ai') {
+      // Player vs AI
+      if (currentPlayer === player1) {
+        isPlayerTurn = false;
+        setTimeout(aiMove, 500);
+      }
+    } else {
+      // Player vs Player
+      currentPlayer = currentPlayer === player1 ? player2 : player1;
+    }
   }
 }
 
 // AI's turn
 function aiMove() {
-  if (gameOver || aiInProgress) return; // Prevent overlapping AI moves
+  if (gameOver || aiInProgress) return;
   aiInProgress = true;
 
   let move;
@@ -61,12 +72,12 @@ function aiMove() {
   else if (difficulty === 'medium') move = mediumAiMove();
   else move = hardAiMove();
 
-  board[move] = ai;
+  board[move] = player2;
   renderBoard();
-  checkGameState(ai);
-  if (!gameOver) isPlayerTurn = true;
+  checkGameState(player2);
 
-  aiInProgress = false; // Allow player turn
+  if (!gameOver) isPlayerTurn = true;
+  aiInProgress = false;
 }
 
 // AI move strategies
@@ -76,13 +87,12 @@ function easyAiMove() {
 }
 
 function mediumAiMove() {
-  // Block player or random move
-  const blockMove = findWinningMove(player);
+  const blockMove = findWinningMove(player1);
   return blockMove !== null ? blockMove : easyAiMove();
 }
 
 function hardAiMove() {
-  return findWinningMove(ai) || findWinningMove(player) || easyAiMove();
+  return findWinningMove(player2) || findWinningMove(player1) || easyAiMove();
 }
 
 function findWinningMove(currentPlayer) {
@@ -102,9 +112,10 @@ function findWinningMove(currentPlayer) {
 // Check the game state
 function checkGameState(currentPlayer) {
   if (checkWinner(currentPlayer)) {
-    message.textContent = currentPlayer === player ? 'Player Wins!' : 'AI Wins!';
+    message.textContent = currentPlayer === player1 ? 'Player 1 Wins!' : (gameMode === 'ai' ? 'AI Wins!' : 'Player 2 Wins!');
     gameOver = true;
-    currentPlayer === player ? playerScore++ : aiScore++;
+    if (currentPlayer === player1) player1Score++;
+    else player2Score++;
     updateScores();
   } else if (board.every(cell => cell !== '')) {
     message.textContent = "It's a Draw!";
@@ -117,14 +128,11 @@ function resetGame() {
   board = ['', '', '', '', '', '', '', '', ''];
   gameOver = false;
   message.textContent = '';
+  currentPlayer = player1;
+  isPlayerTurn = true;
   renderBoard();
 
-  if (firstPlayer === 'ai') {
-    isPlayerTurn = false;
-    setTimeout(() => {
-      aiMove(); // AI moves first
-    }, 500);
-  } else {
+  if (gameMode === 'ai') {
     isPlayerTurn = true;
   }
 }
@@ -141,12 +149,12 @@ function checkWinner(currentPlayer) {
 
 // Update the scores
 function updateScores() {
-  playerScoreElem.textContent = playerScore;
-  aiScoreElem.textContent = aiScore;
+  player1ScoreElem.textContent = player1Score;
+  player2ScoreElem.textContent = player2Score;
 }
 
 // Event listeners
 restartBtn.addEventListener('click', resetGame);
 window.addEventListener('load', initGame);
+gameModeSelect.addEventListener('change', initGame);
 difficultySelect.addEventListener('change', initGame);
-firstPlayerSelect.addEventListener('change', initGame);
