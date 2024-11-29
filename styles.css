@@ -121,3 +121,93 @@ button {
 button:hover {
   background: #5352ed;
 }
+#game-mode{
+  background-color: white;
+}
+
+/* General responsive design */
+@media screen and (max-width: 600px) {
+  .game-container {
+    width: 90%;
+    padding: 15px;
+  }
+
+  h1 {
+    font-size: 2em;
+  }
+
+  .scoreboard {
+    flex-direction: column;
+    gap: 10px;
+    font-size: 1em;
+  }
+
+  .scoreboard div {
+    padding: 8px 15px;
+  }
+
+  .game-board {
+    grid-template-columns: repeat(3, 80px);
+    grid-gap: 8px;
+  }
+
+  .cell {
+    width: 80px;
+    height: 80px;
+    font-size: 2em;
+  }
+
+  .options {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 10px;
+    margin: 10px 0;
+  }
+
+  .options label {
+    font-size: 1em;
+  }
+
+  .options select {
+    font-size: 1em;
+    padding: 8px;
+    width: 100%;
+    max-width: 200px;
+  }
+
+  button {
+    font-size: 0.9em;
+    padding: 10px 20px;
+  }
+
+  .message {
+    font-size: 1em;
+    margin-bottom: 15px;
+  }
+}
+
+/* Even smaller screens (e.g., older phones) */
+@media screen and (max-width: 400px) {
+  .game-board {
+    grid-template-columns: repeat(3, 60px);
+    grid-gap: 6px;
+  }
+
+  .cell {
+    width: 60px;
+    height: 60px;
+    font-size: 1.5em;
+  }
+
+  .options select {
+    font-size: 0.9em;
+    padding: 6px;
+    max-width: 180px;
+  }
+
+  button {
+    font-size: 0.8em;
+    padding: 8px 16px;
+  }
+}
